@@ -2,11 +2,11 @@ NAME = pipex
 CC = cc
 RM = rm -rf
 FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-LIBFTDIR = ../../libft
+LIBFTDIR = ../libft
 
 SRC_DIR = .
 
-SRC_FILES = pipex.c main.c
+SRC_FILES = pipex.c main.c pipex_utils.c free.c execute_command.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
