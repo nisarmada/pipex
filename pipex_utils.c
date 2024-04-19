@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/16 13:37:51 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/18 20:30:32 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/19 20:47:44 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char *split_command(char *command, cmd_x *cmd)
 
 void init_cmd (cmd_x *cmd, int f)
 {
-	cmd->fd = f;
+	cmd->f = f;
 	cmd->path = NULL;
 	cmd->cmd = NULL;
 	cmd->args = NULL;

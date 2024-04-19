@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/01 15:26:39 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/18 20:49:00 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/19 21:54:30 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,30 @@ char **get_path(char **envp)
 	int		i;
 	char	**split_path;
 	
+	// i = 0;
+	// while (envp[i] != NULL)
+	// {
+	// 	printf("get path %s\n", envp[i]);
+	// 	i++;
+	// }
+	// printf("YOOO\n");
 	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5))
+	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
 	{
+		//printf("get path %i %s\n",i , envp[i]);
 		i++;
 	}
+	//printf("get path %s\n", envp[i]);
+	// i = 0;
+	// while (envp[i] != NULL)
+	// {
+	// 	printf("get path %s\n", envp[i]);
+	// 	i++;
+	// }
 	envp[i] = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	//printf("env %s\n", envp[i]);
 	split_path = ft_split(envp[i], ':');
+	envp[i] = ft_strconcat("PATH=", envp[i]);
 	if (!split_path)
 	{
 		free(split_path);
@@ -40,7 +56,7 @@ char **get_path(char **envp)
 	//printf("i %i\n", i);
 	return (split_path);
 }
-char **possible_paths(char **paths, char *command)
+char **possible_paths(char **paths, cmd_x cmd)
 {
 	int		i;
 	char	**connected_path;
@@ -61,14 +77,20 @@ char **possible_paths(char **paths, char *command)
 	i = 0;
 	if (!connected_path)
 		return NULL;
-	while (paths[i] != NULL)
+	while (i < j)
 	{
-		connected_path[i] = ft_strconcat2(paths[i], command);
+		connected_path[i] = ft_strconcat2(paths[i], cmd.cmd);
 		//printf("connected path : %s\n", connected_path[i]);
 		i++;
 	}
 	//printf("heyy\n");
 	connected_path[i] = NULL;
+	// i = 0;
+	// while (i < j)
+	// {
+	// 	printf("possible paths %s\n", connected_path[i]);
+	// 	i++;
+	// }
 	//correct_path = find_correct_path(connected_path, command);
 	return (connected_path);
 }
@@ -93,41 +115,69 @@ char *find_correct_path(char **paths)
 	//printf("corerct path %s\n", paths[i]);
 	return (correct_path);
 }
+cmd_x handler(cmd_x *cmd, int f, char* av, char* envp[])
+{
+	char	**cmd_before = NULL;
+	char	**path_before;
+	char	**path_after;
 
+	cmd->f = f;
+	cmd_before = (char **)malloc(sizeof(char *) * (10));
+	cmd->cmd = split_command(av, cmd);
+	//printf("command %s\n", cmd->cmd);
+	path_before = get_path(envp);
+	int i = 0;
+	// while (path_before[i])
+	// {
+	// 	printf("%s path before %s\n", cmd->cmd, path_before[i]);
+	// 	i++;
+	// }
+	path_after = possible_paths(path_before, *cmd);
+	i = 0;
+	// while (path_after[i])
+	// {
+	// 	printf("%s path after %s\n", cmd->cmd, path_after[i]);
+	// 	i++;
+	// }
+	cmd->path = find_correct_path(path_after);
+	//printf("bananannananana\n");
+	//printf("correct path handler %s\n", find_correct_path(path_after));
+	//printf("%s path %s\n",cmd->cmd, cmd->path);
+	free(path_before);
+	free(path_after);
+	return (*cmd);
+}
 void pipex(char **envp, char **av, int f1, int f2)
 {
 	int		i;
 	cmd_x	cmd1;
 	cmd_x	cmd2;
-	char	**cmd1_before = NULL;
-	char	**cmd2_before = NULL;
-	char	**path_before;
-	char	**path_after;
-	char	*correct_path;
+	// char	**cmd1_before = NULL;
+	// char	**cmd2_before = NULL;
+	// char	**path_before;
+	// char	**path_after;
 	
 	i = 0;
 	init_cmd(&cmd1, f1);
 	init_cmd(&cmd2, f2);
-	cmd1_before = (char **)malloc(sizeof(char *) * (10));
-	cmd2_before = (char **)malloc(sizeof(char *) * (10));
-	// cmd1_before = split_command(av[2], &cmd1);
-	// cmd2_before = split_command(av[3], &cmd2);
-	cmd1.cmd = split_command(av[2], &cmd1);
-	cmd2.cmd = split_command(av[3], &cmd2);
-	//printf("lalala %s\n", cmd1.cmd);
-	path_before = get_path(envp);
-	//printf("in pipex %s\n", cmd1[0]);
-	path_after = possible_paths(path_before, cmd1.cmd);
-	correct_path = find_correct_path(path_after);
-	// free_path(path_after);
-	// free_path(path_before);
-	printf("correct path : %s\n", correct_path);
+	//printf("vananana\n");
+	printf("av3 %s\n", av[3]);
+	cmd1 = handler(&cmd1, f1, av[2], envp);
+	//printf("vananana\n");
+	cmd2 = handler(&cmd2, f2, av[3], envp);
 	while (cmd1.args[i])
 	{
-		printf("cmd args %s\n", cmd1.args[i]);
+		//printf("cmd args %s\n", cmd1.args[i]);
 		i++;
 	}
-	exec_cmd(cmd1, cmd2, f1, f2, envp);
+	i = 0;
+	//printf("correct path : %s\n", cmd2.path);
+	while (cmd2.args[i])
+	{
+		//printf("cmd args %s\n", cmd2.args[i]);
+		i++;
+	}
+	exec_cmd(cmd1, cmd2, envp);
 	//free_path(cmd1_before);
 	//printf("cmd args %s\n", cmd1.args[i]);
 }
