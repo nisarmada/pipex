@@ -14,6 +14,8 @@ INCLUDE = -L $(LIBFTDIR) -lft
 
 .PHONY : all clean fclean re
 
+all: $(NAME)
+
 $(NAME): $(OBJ_FILES)
 	make -C $(LIBFTDIR)
 	$(CC) $(FLAGS) $(OBJ_FILES) -o $(NAME) $(INCLUDE)

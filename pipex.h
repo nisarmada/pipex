@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 19:06:23 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/19 19:29:57 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/21 21:01:28 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void exec_cmd(cmd_x cmd, cmd_x cmd2, char **envp);
 void child_process_1(cmd_x cmd, char* envp[], int fd[]);
 void child_process_2(cmd_x cmd, char* envp[], int fd[]);
 cmd_x handler(cmd_x *cmd, int f, char* av, char* envp[]);
+void free_struct(cmd_x *cmd);
 
 #endif 

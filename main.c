@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/02 19:05:52 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/19 21:54:21 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/21 21:01:39 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ int main (int ac, char **av, char **envp)
 	pipex(envp, av, f1, f2);
 	close (f1);
 	close (f2);
+	// check_open_fds();
 }

@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/16 13:37:51 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/19 20:47:44 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/21 18:25:02 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char *split_command(char *command, cmd_x *cmd)
 		cmd->args[i] = split_cmd[i];
 		i++;
 	}
-	printf("command %s\n", cmd->args[0]);
+	//printf("command %s\n", cmd->args[0]);
 	free(split_cmd);
 	//cmd->args[i] = NULL;
 	return (cmd->cmd);
