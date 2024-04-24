@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/16 13:37:51 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/21 18:25:02 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/24 20:02:46 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*ft_strconcat2(const char *str, const char *buffer)
 		n++;
 	}
 	ptr[i + n] = '\0';
+	//printf("strconcat ptr %s\n", ptr);
 	return (ptr);
 }
 

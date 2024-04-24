@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/01 15:26:39 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/21 21:13:41 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/04/24 20:09:37 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char **possible_paths(char **paths, cmd_x cmd)
 	
 	while (paths[j])
 		j++;
-	connected_path = (char **)malloc(sizeof(char *) * (j + 2));
+	connected_path = (char **)malloc(sizeof(char *) * (j + 1));
 	while (i <= j)
 	{
 		connected_path[i] = NULL;
@@ -98,6 +98,7 @@ char **possible_paths(char **paths, cmd_x cmd)
 	// while (i < j)
 	// {
 	// 	printf("possible paths %s\n", connected_path[i]);
+	// 	free(paths[i]);
 	// 	i++;
 	// }
 	free_path(paths);
@@ -119,9 +120,17 @@ char *find_correct_path(char **paths)
 			correct_path = paths[i];
 			break;
 		}
+		free(paths[i]);
 		i++;
 	}
-	free(paths);
+	i++;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	
+	//free(paths);
 	return (correct_path);
 }
 cmd_x handler(cmd_x *cmd, int f, char* av, char* envp[])
@@ -151,13 +160,15 @@ cmd_x handler(cmd_x *cmd, int f, char* av, char* envp[])
 	//printf("correct path handler %s\n", find_correct_path(path_after));
 	//printf("%s path %s\n",cmd->cmd, cmd->path);
 	//free(path_after);
-	//int i = 0;
+	// int i = 0;
 	// while (path_after[i])
 	// {
 	// 	printf("path after %s\n", path_after[i]);
+	// 	free(path_after[i]);
 	// 	i++;
 	// }
 	//cmd->path = *path_after;
+	free(path_after);
 	return (*cmd);
 }
 void pipex(char **envp, char **av, int f1, int f2)
