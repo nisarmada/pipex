@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/01 15:26:39 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/24 20:09:37 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/05/02 19:58:34 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,22 @@ char *find_correct_path(char **paths)
 	correct_path = NULL;
 	while (paths[i])
 	{
+	//	printf("paths[%i] : %s\n", i, paths[i]);
 		if (access(paths[i], X_OK) == 0)
 		{
+			//printf("========== MPIKA CORRECT PATH ===================\n");
 			correct_path = paths[i];
+			//free(paths[i]);
 			break;
+		} 
+		else{
+			//printf("free[%i] : %s\n", i, paths[i]);
+			free(paths[i]);
 		}
-		free(paths[i]);
 		i++;
 	}
+	//free(paths[i]);
+	//printf("Heyyyyyyyddddddddddddddddddddddddddddddddd\n");
 	i++;
 	while (paths[i])
 	{
@@ -156,6 +164,11 @@ cmd_x handler(cmd_x *cmd, int f, char* av, char* envp[])
 	// 	i++;
 	// }
 	cmd->path = find_correct_path(path_after);
+	if (cmd->path == NULL)
+	{
+		ft_printf("zsh: command not found %s\n", cmd->cmd);
+		exit(EXIT_FAILURE);
+	}
 	//printf("bananannananana\n");
 	//printf("correct path handler %s\n", find_correct_path(path_after));
 	//printf("%s path %s\n",cmd->cmd, cmd->path);
