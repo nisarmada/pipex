@@ -6,29 +6,28 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/16 13:37:51 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/04/24 20:02:46 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/05/05 16:38:44 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int word_count(char *command, char c)
+int	word_count(char *command, char c)
 {
 	int		i;
 	int		words;
 
 	words = 1;
 	i = 0;
-	//printf("command %s\n", command);
 	while (command[i])
 	{
 		if (command[i] == c && (command[i - 1] >= 97 && command[i - 1] <= 122))
 			words++;
 		i++;
 	}
-	//printf("words %i\n", words);
 	return (words);
 }
+
 char	*ft_strconcat2(const char *str, const char *buffer)
 {
 	size_t	i;
@@ -54,17 +53,17 @@ char	*ft_strconcat2(const char *str, const char *buffer)
 		n++;
 	}
 	ptr[i + n] = '\0';
-	//printf("strconcat ptr %s\n", ptr);
 	return (ptr);
 }
 
-char *split_command(char *command, cmd_x *cmd)
+char	*split_command(char *command, t_cmd_x *cmd)
 {
 	int		i;
-	int		j = 0;
+	int		j;
 	char	**split_cmd;
 
 	i = 0;
+	j = 0;
 	split_cmd = ft_split(command, ' ');
 	cmd->cmd = split_cmd[0];
 	while (split_cmd[j] != NULL)
@@ -79,16 +78,6 @@ char *split_command(char *command, cmd_x *cmd)
 		cmd->args[i] = split_cmd[i];
 		i++;
 	}
-	//printf("command %s\n", cmd->args[0]);
 	free(split_cmd);
-	//cmd->args[i] = NULL;
 	return (cmd->cmd);
-}
-
-void init_cmd (cmd_x *cmd, int f)
-{
-	cmd->f = f;
-	cmd->path = NULL;
-	cmd->cmd = NULL;
-	cmd->args = NULL;
 }
