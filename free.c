@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/18 19:06:00 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/05/05 16:53:35 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/05/06 15:38:27 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,23 @@ void	free_struct(t_cmd_x *cmd)
 	free(cmd->args);
 }
 
-void	check_empty(char *av[])
+int	check_empty(char *av[])
 {
-	if (av[1] == NULL || av[4] == NULL)
+	if (av[1][0] == '\0' || av[4][0] == '\0' ||
+	av[1][0] == ' ' || av[4][0] == ' ')
+	{
 		ft_printf("zsh: no such file or directory:\n");
-	if (av[3] == NULL || av[2] == NULL)
+		exit(EXIT_FAILURE);
+	}
+	if (av[3][0] == '\0' || av[2][0] == '\0')
+	{
 		ft_printf("zsh: permission denied\n");
+		exit(EXIT_FAILURE);
+	}
+	if (av[2][0] == ' ' || av[3][0] == ' ')
+	{
+		ft_printf("zsh: command not found:\n");
+		exit(EXIT_FAILURE);
+	}
+	return (0);
 }

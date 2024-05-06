@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/01 15:26:39 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/05/05 16:37:49 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/05/06 18:02:04 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ char	**get_path(char **envp)
 
 	i = 0;
 	split_path = NULL;
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
 	{
 		i++;
 	}
+	if (ft_strncmp(envp[i], "PATH=", 5) != 0)
+		exit(EXIT_FAILURE);
 	path_env = ft_strdup(envp[i] + 5);
 	if (path_env)
 	{

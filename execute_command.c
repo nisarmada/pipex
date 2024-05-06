@@ -6,7 +6,7 @@
 /*   By: nsarmada <nsarmada@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/18 20:33:28 by nsarmada      #+#    #+#                 */
-/*   Updated: 2024/05/05 16:47:26 by nsarmada      ########   odam.nl         */
+/*   Updated: 2024/05/06 13:56:33 by nsarmada      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	child_process_1(t_cmd_x cmd, char *envp[], int fd[])
 	close(fd[0]);
 	while (cmd.args[i])
 	{
-		printf("cmd.args[i] child process 1 %s\n", cmd.args[i]);
 		i++;
 	}
 	if ((dup2(cmd.f, STDIN_FILENO) < 0))
@@ -91,7 +90,6 @@ void	child_process_2(t_cmd_x cmd, char *envp[], int fd[])
 	i = 0;
 	while (cmd.args[i])
 	{
-		printf("cmd.args[i] child process 2 %s\n", cmd.args[i]);
 		i++;
 	}
 	if (dup2(cmd.f, STDOUT_FILENO) < 0)
